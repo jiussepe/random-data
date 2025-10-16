@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dato Impactante Random</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.6s ease;
+    }
+
+    body.modo-oscuro {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    /* Efecto de partículas flotantes */
+    body::before {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: float 20s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-50px, -50px); }
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.15);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      padding: 50px 40px;
+      border-radius: 30px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 1;
+      animation: slideIn 0.6s ease-out;
+      transition: all 0.6s ease;
+    }
+
+    body.modo-oscuro .container {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+      box-shadow: 0 8px 32px rgba(255, 0, 0, 0.2);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Toggle Switch */
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    body.modo-oscuro .toggle-switch {
+      background: rgba(255, 0, 0, 0.3);
+      border: 1px solid rgba(255, 0, 0, 0.4);
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    body.modo-oscuro .toggle-slider {
+      transform: translateX(30px);
+      background: #ff4757;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      font-weight: 700;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      animation: glow 2s ease-in-out infinite alternate;
+      transition: all 0.3s ease;
+    }
+
+    body.modo-oscuro h1 {
+      color: #ff6b6b;
+      text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 2px 2px 10px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    body.modo-oscuro h1 {
+      animation: glowRed 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowRed {
+      from {
+        text-shadow: 2px 2px 10px rgba(255, 0, 0, 0.3);
+      }
+      to {
+        text-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 2px 2px 10px rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    #dato {
+      font-size: 1.3rem;
+      line-height: 1.8;
+      margin: 30px 0;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      font-weight: 400;
+      transition: all 0.3s ease;
+    }
+
+    body.modo-oscuro #dato {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 0, 0, 0.2);
+    }
+
+    #dato.fade {
+      animation: fadeIn 0.8s ease-in;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body.modo-oscuro button {
+      background: linear-gradient(135deg, #ff4757 0%, #c92a2a 100%);
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5);
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(245, 87, 108, 0.6);
+    }
+
+    body.modo-oscuro button:hover {
+      box-shadow: 0 6px 25px rgba(255, 0, 0, 0.7);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Contador de datos */
+    .contador {
+      margin-top: 25px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      font-weight: 400;
+    }
+
+    /* Redes Sociales */
+    .redes-sociales {
+      margin-top: 35px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    body.modo-oscuro .redes-sociales {
+      border-top: 1px solid rgba(255, 0, 0, 0.3);
+    }
+
+    .redes-sociales p {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      opacity: 0.9;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      font-size: 1.3rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    body.modo-oscuro .social-icons a {
+      background: rgba(255, 0, 0, 0.2);
+      border: 1px solid rgba(255, 0, 0, 0.3);
+    }
+
+    .social-icons a:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    body.modo-oscuro .social-icons a:hover {
+      background: rgba(255, 0, 0, 0.4);
+      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
+    }
+
+    /* Advertencia modo perturbador */
+    .advertencia {
+      background: rgba(255, 200, 0, 0.2);
+      border: 1px solid rgba(255, 200, 0, 0.5);
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    body.modo-oscuro .advertencia {
+      display: block;
+      background: rgba(255, 0, 0, 0.15);
+      border: 1px solid rgba(255, 0, 0, 0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 40px 25px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      #dato {
+        font-size: 1.1rem;
+        min-height: 100px;
+        padding: 15px;
+      }
+
+      button {
+        padding: 12px 30px;
+        font-size: 1rem;
+      }
+
+      .social-icons a {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      #dato {
+        font-size: 1rem;
+        min-height: 90px;
+      }
+
+      .mode-toggle {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="mode-toggle">
+      <span>😊 Normal</span>
+      <div class="toggle-switch" onclick="toggleMode()">
+        <div class="toggle-slider"></div>
+      </div>
+      <span>💀 Perturbador</span>
+    </div>
+
+    <div class="advertencia">
+      ⚠️ Modo perturbador activado: Datos inquietantes basados en hechos reales
+    </div>
+
+    <h1 id="titulo">💡 Dato Impactante del Día</h1>
+    <p id="dato">Presiona el botón para descubrir un dato impactante...</p>
+    <button id="nuevoDato"><span id="botonTexto">🔄 Otro dato</span></button>
+    <div class="contador">Datos descubiertos: <strong id="conteo">0</strong></div>
+    
+    <div class="redes-sociales">
+      <p>✨ Sígueme en mis redes</p>
+      <div class="social-icons">
+        <a href="https://instagram.com/reynaga9920?igsh=ZDB6enZoOG9wN3R3" rel="noopener noreferrer" target="_blank" title="Instagram">📷</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const datosNormales = [
+      // Naturaleza y Animales
+      "El corazón humano puede generar suficiente presión para lanzar sangre a 9 metros.",
+      "Los pulpos tienen tres corazones y sangre azul.",
+      "La miel nunca caduca: se han encontrado frascos comestibles de hace más de 3,000 años.",
+      "Las vacas tienen mejores amigas y se estresan cuando las separan.",
+      "Un solo rayo contiene suficiente energía para tostar 100,000 rebanadas de pan.",
+      "Las abejas pueden reconocer rostros humanos.",
+      "Un día en Venus dura más que un año en Venus.",
+      "Los koalas tienen huellas dactilares casi idénticas a las humanas.",
+      "Un caracol puede dormir hasta 3 años seguidos.",
+      "Los elefantes no pueden saltar.",
+      "Las jirafas pueden limpiarse las orejas con su lengua de 50 cm.",
+      "Los camarones tienen el corazón en la cabeza.",
+      "Los flamencos son rosados por los camarones que comen.",
+      "Las mariposas pueden saborear con sus patas.",
+      "Un colibrí pesa menos que una moneda.",
+      "Los delfines duermen con un ojo abierto.",
+      "Las hormigas pueden levantar hasta 50 veces su peso.",
+      "Los pingüinos tienen una glándula que filtra la sal del agua marina.",
+      "Las ballenas azules pueden pesar tanto como 30 elefantes.",
+      "Los gatos pasan el 70% de su vida durmiendo.",
+      
+      // Espacio y Astronomía
+      "Una cucharada de estrella de neutrones pesaría mil millones de toneladas.",
+      "Hay más estrellas en el universo que granos de arena en todas las playas de la Tierra.",
+      "En el espacio, el metal se fusiona automáticamente al contacto.",
+      "Un traje espacial cuesta aproximadamente 12 millones de dólares.",
+      "La huella de Neil Armstrong permanecerá en la Luna por millones de años.",
+      "Júpiter tiene 79 lunas conocidas.",
+      "El Sol representa el 99.86% de la masa del sistema solar.",
+      "En Marte, los atardeceres son azules.",
+      "Saturno es tan ligero que podría flotar en agua.",
+      "La Estación Espacial Internacional viaja a 28,000 km/h.",
+      "Un año luz equivale a 9.46 billones de kilómetros.",
+      "Venus gira en dirección opuesta a la mayoría de los planetas.",
+      "La temperatura en el núcleo del Sol alcanza los 15 millones de grados.",
+      
+      // Cuerpo Humano
+      "El ADN humano comparte el 50% con los plátanos.",
+      "Tus ojos tienen la misma resolución desde que naciste.",
+      "El cerebro humano usa el 20% de la energía del cuerpo.",
+      "Los humanos brillan en la oscuridad, pero la luz es demasiado débil para verla.",
+      "Tu nariz puede recordar 50,000 aromas diferentes.",
+      "Los huesos son más fuertes que el acero, proporcionalmente.",
+      "El músculo más fuerte del cuerpo es la lengua.",
+      "Produces suficiente saliva en tu vida para llenar dos piscinas.",
+      "Tus pulmones tienen la misma superficie que una cancha de tenis.",
+      "El ácido estomacal puede disolver metal.",
+      "Parpadeamos unas 20,000 veces al día.",
+      "El corazón late aproximadamente 100,000 veces al día.",
+      "Cada persona tiene un olor único, excepto gemelos idénticos.",
+      
+      // Historia y Cultura
+      "Los antiguos egipcios usaban piedras como almohadas.",
+      "Cleopatra vivió más cerca de la llegada del hombre a la Luna que de la construcción de las pirámides.",
+      "Oxford es más antigua que el Imperio Azteca.",
+      "Los vikingos llegaron a América 500 años antes que Colón.",
+      "La Gran Muralla China no es visible desde el espacio.",
+      "Las pirámides fueron construidas cuando aún existían mamuts.",
+      "El primer videojuego fue creado en 1958 y se llamaba 'Tennis for Two'.",
+      "Nintendo fue fundada en 1889 como compañía de naipes.",
+      "La Coca-Cola era originalmente verde.",
+      "El primer correo electrónico fue enviado en 1971.",
+      
+      // Tecnología y Ciencia
+      "Hay más poder de procesamiento en una calculadora moderna que en la nave Apollo 11.",
+      "El 90% de todos los datos del mundo fueron creados en los últimos dos años.",
+      "El primer iPhone tenía menos memoria que un USB promedio de hoy.",
+      "Facebook tiene más usuarios que la población de China.",
+      "Google procesa más de 40,000 búsquedas por segundo.",
+      "El código fuente de Windows 95 tenía 15 millones de líneas.",
+      "El primer disco duro de 1 GB pesaba más de 200 kg en 1980.",
+      "El WiFi fue inventado por accidente mientras se investigaba agujeros negros.",
+      
+      // Curiosidades Raras
+      "Hay más maneras de ordenar un mazo de cartas que átomos en la Tierra.",
+      "Si desenrollas todo el ADN de tu cuerpo, llegaría del Sol a Plutón y de vuelta.",
+      "Es más probable ganar la lotería que ser alcanzado por un rayo dos veces.",
+      "Los plátanos son radioactivos, pero inofensivos.",
+      "Técnicamente, el agua no tiene sabor, olor ni color.",
+      "Las nubes pueden pesar más de 500,000 kg.",
+      "El vidrio es técnicamente un líquido que fluye muy lentamente.",
+      "Alaska es el estado más al norte, este y oeste de Estados Unidos.",
+      "Oxford tiene una cátedra más antigua que el Imperio Azteca.",
+      "La probabilidad de beber una molécula de agua que también bebió un dinosaurio es muy alta.",
+      
+      // Comida y Bebidas
+      "Los cacahuates son uno de los ingredientes de la dinamita.",
+      "El chocolate era usado como moneda por los aztecas.",
+      "Las zanahorias originalmente eran moradas.",
+      "El wasabi real es extremadamente caro, la mayoría consume rábano teñido.",
+      "Las fresas no son técnicamente frutas, son flores.",
+      "Los plátanos son bayas, pero las fresas no.",
+      "El ketchup se vendía como medicina en el siglo XIX.",
+      "Una sola cucharada de miel es el trabajo de toda la vida de 12 abejas.",
+      
+      // Geografía
+      "Rusia tiene 11 zonas horarias diferentes.",
+      "El punto más seco de la Tierra está en la Antártida.",
+      "Canadá tiene más lagos que el resto del mundo combinado.",
+      "El desierto del Sahara crece aproximadamente 48 km por año.",
+      "El Monte Everest crece 4 milímetros cada año.",
+      "Australia se mueve 7 cm al norte cada año.",
+      "El río más corto del mundo mide solo 61 metros.",
+      
+      // Datos WTF
+      "Hay más posibles partidas de ajedrez que átomos en el universo observable.",
+      "Si pliegas un papel 42 veces, llegaría a la Luna.",
+      "Estadísticamente, más personas mueren por burros que en accidentes aéreos.",
+      "Las vacas matan más personas al año que los tiburones.",
+      "El nombre completo de la ciudad de Bangkok tiene 169 caracteres.",
+      "Hay un hotel en Suecia hecho completamente de hielo que se reconstruye cada año.",
+      "Existe un árbol en Sudáfrica tan grande que tiene un bar en su interior."
+    ];
+
+    const datosPerturbadores = [
+      // Muerte y Descomposición
+      "Después de morir, tu cuerpo se mueve durante más de un año mientras los tendones se contraen.",
+      "Los cadáveres pueden producir sonidos debido a los gases acumulados en descomposición.",
+      "Tus uñas y cabello NO siguen creciendo después de morir, la piel se retrae haciendo que parezcan más largos.",
+      "Un cuerpo humano tarda entre 8-12 años en descomponerse completamente bajo tierra.",
+      "Los gusanos aparecen en un cadáver en menos de 24 horas después de la muerte.",
+      
+      // Parásitos y Enfermedades
+      "Hay ácaros microscópicos viviendo en tus pestañas en este momento.",
+      "El parásito Toxoplasma gondii infecta a 1 de cada 3 humanos y puede alterar tu comportamiento.",
+      "Existen gusanos que pueden vivir en tu cerebro y causar convulsiones.",
+      "La mosca botfly deposita larvas bajo tu piel que crecen y se mueven dentro de ti.",
+      "Hay más bacterias en tu boca que personas en el mundo entero.",
+      "El hongo Cordyceps puede controlar el cerebro de insectos como zombies hasta matarlos.",
+      
+      // Psicología Oscura
+      "Tu cerebro puede hacerte escuchar voces y no significa que estés loco, es común en situaciones de estrés extremo.",
+      "Existe el síndrome de Cotard donde las personas creen firmemente que están muertas.",
+      "El 'call of the void' es ese impulso extraño de saltar cuando estás en un lugar alto, lo experimenta el 50% de las personas.",
+      "Puedes desarrollar el síndrome de la mano ajena donde tu mano actúa independientemente de tu voluntad.",
+      "La privación del sueño durante 11 días puede causar daño cerebral permanente.",
+      
+      // Crímenes y Casos Reales
+      "Existen más de 200,000 casos sin resolver de personas desaparecidas solo en Estados Unidos.",
+      "En promedio, pasas al lado de 36 asesinos en tu vida sin saberlo.",
+      "Los asesinos seriales más exitosos nunca son capturados porque no siguen patrones.",
+      "Hay lugares en el Océano Pacífico donde un cuerpo nunca sería encontrado.",
+      "El 'código morse' en los ojos de una persona en TV puede indicar que está siendo forzada a hablar.",
+      
+      // Naturaleza Aterradora
+      "Las avispas parásitas inyectan sus huevos en arañas vivas que son consumidas de adentro hacia afuera.",
+      "Existen hongos que pueden hacer crecer estructuras similares a dedos desde cadáveres.",
+      "Los koalas pueden transmitir clamidia a los humanos.",
+      "Las hormigas zombies infectadas por hongos son controladas para subir plantas y morir mordiendo una hoja.",
+      "Los delfines pueden ser extremadamente violentos y han atacado humanos sin provocación.",
+      "Las ballenas orcas juegan con focas lanzándolas por los aires antes de comérselas.",
+      
+      // Cuerpo Humano Perturbador
+      "Tu cuerpo produce suficiente ácido estomacal para disolver una navaja de metal.",
+      "Técnicamente puedes arrancar tu propio dedo con la misma fuerza que morder una zanahoria, pero tu cerebro te lo impide.",
+      "Los tumores pueden crecer dientes, cabello y hasta ojos parcialmente formados.",
+      "Existe una condición llamada 'locked-in syndrome' donde estás completamente consciente pero paralizado.",
+      "Puedes vivir varios minutos después de ser decapitado, permaneciendo consciente brevemente.",
+      "La rabia hace que tengas terror al agua mientras mueres de sed.",
+      
+      // Espacio Aterrador
+      "Si caes en un agujero negro, desde tu perspectiva tardarías eternidad en caer, pero para otros sería instantáneo.",
+      "En el espacio, sin protección, tus fluidos corporales hervirían mientras te congelas simultáneamente.",
+      "Hay una nube de alcohol en el espacio de 1000 veces el diámetro del sistema solar.",
+      "Los rayos cósmicos pueden atravesar naves espaciales y causar alucinaciones luminosas en astronautas.",
+      "Venus llueve ácido sulfúrico con vientos de 360 km/h.",
+      
+      // Tecnología Inquietante
+      "Tu smartphone sabe más de ti que tus amigos más cercanos: dónde estás, qué haces, cuándo duermes.",
+      "Existen algoritmos de IA que pueden predecir tu muerte con 85% de precisión.",
+      "Las cámaras de seguridad con reconocimiento facial te rastrean sin que lo sepas en ciudades modernas.",
+      "Tu voz puede ser clonada con solo 3 segundos de audio usando IA.",
+      "Existe tecnología para leer tus pensamientos básicos mediante actividad cerebral.",
+      
+      // Historia Oscura
+      "Durante la peste negra, la gente bailaba hasta morir en episodios de histeria colectiva.",
+      "Los antiguos romanos usaban orina humana para blanquear sus dientes.",
+      "En el pasado, la gente era enterrada con campanas por miedo a ser enterrados vivos.",
+      "Los primeros anestésicos no funcionaban, la gente solo quedaba paralizada sintiendo todo.",
+      "Las momias egipcias eran molidas y vendidas como medicina en Europa medieval.",
+      
+      // Océano Profundo
+      "En la fosa de las Marianas hay criaturas que nunca han visto luz y no sabemos qué más existe ahí.",
+      "Los calamares gigantes tienen ojos del tamaño de pelotas de basquetbol para ver en la oscuridad.",
+      "Existen peces que pueden tragarse presas más grandes que ellos mismos.",
+      "El 95% del océano permanece inexplorado, no sabemos qué hay ahí abajo.",
+      "Hay 'lagos' en el fondo del océano con agua tan salada que actúa como líquido separado.",
+      
+      // Realidad Perturbadora
+      "Estadísticamente, conoces al menos a una persona que ha cometido un crimen grave sin ser capturada.",
+      "Tu memoria es extremadamente poco confiable, 'recuerdos' pueden ser completamente fabricados por tu cerebro.",
+      "Existen sonidos del océano profundo grabados que no pueden ser explicados por ningún animal conocido.",
+      "El silencio absoluto en cámaras anecoicas puede hacerte alucinar en menos de 30 minutos.",
+      "Priones (proteínas mal plegadas) pueden convertir tu cerebro en una esponja de forma irreversible."
+    ];
+
+    const datoTexto = document.getElementById('dato');
+    const boton = document.getElementById('nuevoDato');
+    const conteoElement = document.getElementById('conteo');
+    const titulo = document.getElementById('titulo');
+    const botonTexto = document.getElementById('botonTexto');
+    
+    let ultimoIndice = -1;
+    let contador = 0;
+    let modoPerturbador = false;
+
+    function toggleMode() {
+      modoPerturbador = !modoPerturbador;
+      document.body.classList.toggle('modo-oscuro');
+      
+      if (modoPerturbador) {
+        titulo.textContent = '💀 Dato Perturbador';
+        botonTexto.textContent = '🔄 Otro perturbador';
+      } else {
+        titulo.textContent = '💡 Dato Impactante del Día';
+        botonTexto.textContent = '🔄 Otro dato';
+      }
+      
+      mostrarDato();
+    }
+
+    function mostrarDato() {
+      const datosActuales = modoPerturbador ? datosPerturbadores : datosNormales;
+      let randomIndex;
+      
+      // Evitar repetir el mismo dato inmediatamente
+      do {
+        randomIndex = Math.floor(Math.random() * datosActuales.length);
+      } while (randomIndex === ultimoIndice && datosActuales.length > 1);
+      
+      ultimoIndice = randomIndex;
+      
+      // Animación de fade
+      datoTexto.classList.remove('fade');
+      void datoTexto.offsetWidth; // Trigger reflow
+      datoTexto.classList.add('fade');
+      
+      datoTexto.textContent = datosActuales[randomIndex];
+      
+      // Actualizar contador
+      contador++;
+      conteoElement.textContent = contador;
+    }
+
+    // Mostrar un dato al cargar la página
+    window.addEventListener('load', mostrarDato);
+
+    boton.addEventListener('click', mostrarDato);
+  </script>
+</body>
+</html>
